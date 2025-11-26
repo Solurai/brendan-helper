@@ -1,0 +1,2294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brendan's Homework Helper 🎯</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --bg-card-hover: #1f3460;
+            --accent-gold: #f6c90e;
+            --accent-green: #4ecca3;
+            --accent-blue: #00d9ff;
+            --accent-purple: #a855f7;
+            --accent-red: #ff6b6b;
+            --accent-orange: #ff9f43;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header / Bank Section */
+        .header {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #0f3460 100%);
+            padding: 20px;
+            border-bottom: 3px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bank-display {
+            background: linear-gradient(135deg, #2d5016 0%, #1a3a0f 100%);
+            border: 2px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(78, 204, 163, 0.2);
+        }
+
+        .bank-icon {
+            font-size: 1.8rem;
+        }
+
+        .bank-info {
+            text-align: right;
+        }
+
+        .bank-label {
+            font-size: 0.7rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bank-amount {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* View Tabs */
+        .view-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            color: var(--text-secondary);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            border-color: var(--accent-blue);
+        }
+
+        /* Assignment Cards */
+        .assignments-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .assignment-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assignment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent-blue);
+        }
+
+        .assignment-card.priority-high::before {
+            background: var(--accent-red);
+        }
+
+        .assignment-card.priority-medium::before {
+            background: var(--accent-orange);
+        }
+
+        .assignment-card.completed::before {
+            background: var(--accent-green);
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+        }
+
+        .assignment-card.completed {
+            opacity: 0.7;
+        }
+
+        .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .assignment-class {
+            background: var(--bg-dark);
+            color: var(--accent-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .assignment-bonus {
+            background: linear-gradient(135deg, var(--accent-gold), #ffa502);
+            color: var(--bg-dark);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .assignment-revision {
+            background: linear-gradient(135deg, #ff9f43, #ee5a24);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .assignment-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .assignment-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .assignment-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-dark);
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Step View */
+        .step-view {
+            display: none;
+        }
+
+        .step-view.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: var(--bg-card);
+            border: none;
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        .big-picture {
+            background: linear-gradient(135deg, #1e3a5f 0%, var(--bg-card) 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .big-picture h2 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .big-picture-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .why-matters {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .why-matters-label {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .step-card.current {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .step-card.completed {
+            border-color: var(--accent-green);
+            opacity: 0.8;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: var(--accent-purple);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+        }
+
+        .step-card.completed .step-number {
+            background: var(--accent-green);
+        }
+
+        .step-time {
+            background: var(--bg-dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .step-instructions {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .step-instructions strong {
+            color: var(--text-primary);
+        }
+
+        .step-instructions div {
+            margin: 10px 0;
+        }
+
+        .step-instructions code {
+            background: var(--bg-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .step-looking-for {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .looking-for-label {
+            color: var(--accent-orange);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .answer-input {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg-dark);
+            border: 2px solid var(--text-muted);
+            border-radius: 12px;
+            padding: 15px;
+            color: var(--text-primary);
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        .answer-input.large-input {
+            min-height: 350px;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .complete-btn {
+            background: linear-gradient(135deg, var(--accent-green), #2ecc71);
+            border: none;
+            color: var(--bg-dark);
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .complete-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(78, 204, 163, 0.4);
+        }
+
+        .complete-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Celebration Animation */
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--bg-card) 0%, #1a3a5f 100%);
+            border: 3px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            z-index: 1000;
+            animation: popIn 0.5s ease;
+        }
+
+        .celebration.show {
+            display: block;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .celebration-emoji {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: bounce 0.6s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .celebration-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .celebration-subtext {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .celebration-btn {
+            background: var(--accent-gold);
+            border: none;
+            color: var(--bg-dark);
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Final Output */
+        .final-output {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+            border: 2px solid var(--accent-green);
+        }
+
+        .final-output h3 {
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .output-text {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 20px;
+            white-space: pre-wrap;
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.8;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            background: var(--accent-blue);
+            border: none;
+            color: var(--bg-dark);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Bank View */
+        .bank-view {
+            display: none;
+        }
+
+        .bank-view.active {
+            display: block;
+        }
+
+        .bank-summary {
+            background: linear-gradient(135deg, #1a4a1a 0%, #0d2d0d 100%);
+            border: 3px solid var(--accent-green);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .bank-total-label {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .bank-total {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            color: var(--accent-green);
+            text-shadow: 0 0 30px rgba(78, 204, 163, 0.5);
+        }
+
+        .bank-collect {
+            margin-top: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .transactions {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .transactions h3 {
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--text-muted);
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--bg-dark);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-desc {
+            color: var(--text-secondary);
+        }
+
+        .transaction-amount {
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .transaction-amount.pending {
+            color: var(--accent-orange);
+        }
+
+        /* Grade Tracker */
+        .grades-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .grades-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .grade-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg-dark);
+        }
+
+        .grade-class {
+            color: var(--text-secondary);
+        }
+
+        .grade-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .grade-badge.grade-a { background: var(--accent-green); color: var(--bg-dark); }
+        .grade-badge.grade-b { background: var(--accent-blue); color: var(--bg-dark); }
+        .grade-badge.grade-c { background: var(--accent-orange); color: var(--bg-dark); }
+        .grade-badge.grade-d { background: var(--accent-red); color: white; }
+        .grade-badge.grade-f { background: #7f1d1d; color: white; }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-emoji {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .bank-display {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .view-tabs {
+                justify-content: center;
+            }
+
+            .tab-btn {
+                flex: 1;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+
+            .assignment-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .step-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        /* Help Chat Styles */
+        .help-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .help-fab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .help-fab-icon {
+            font-size: 1.2rem;
+        }
+
+        .help-chat {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            height: 500px;
+            max-height: calc(100vh - 120px);
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 2px solid #667eea;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .help-chat.open {
+            display: flex;
+        }
+
+        .help-chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .help-chat-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-chat-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .help-chat-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .help-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .help-message {
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .help-message.user {
+            align-self: flex-end;
+        }
+
+        .help-message.assistant {
+            align-self: flex-start;
+        }
+
+        .help-message-content {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .help-message.user .help-message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .help-message.assistant .help-message-content {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            border: 1px solid #3d4a5c;
+            border-bottom-left-radius: 4px;
+        }
+
+        .help-message.assistant .help-message-content strong {
+            color: var(--accent-gold);
+        }
+
+        .help-chat-input-area {
+            padding: 12px;
+            border-top: 1px solid #3d4a5c;
+            display: flex;
+            gap: 10px;
+            background: var(--bg-dark);
+        }
+
+        .help-chat-input {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid #3d4a5c;
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            resize: none;
+            min-height: 44px;
+            max-height: 100px;
+        }
+
+        .help-chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .help-send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 10px 18px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .help-send-btn:hover {
+            opacity: 0.9;
+        }
+
+        .help-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .help-typing {
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .help-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .help-typing-dot:nth-child(1) { animation-delay: 0s; }
+        .help-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .help-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+
+        @media (max-width: 480px) {
+            .help-fab-text {
+                display: none;
+            }
+
+            .help-fab {
+                padding: 14px;
+                border-radius: 50%;
+            }
+
+            .help-chat {
+                bottom: 70px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                height: calc(100vh - 90px);
+            }
+        }
+
+        /* Share Modal Styles */
+        .share-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+            color: white !important;
+        }
+
+        .share-btn:hover {
+            opacity: 0.9;
+        }
+
+        .share-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
+        }
+
+        .share-overlay.open {
+            display: block;
+        }
+
+        .share-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 2px solid var(--accent-green);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 2001;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .share-modal.open {
+            display: flex;
+        }
+
+        .share-modal-header {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .share-modal-header h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            color: white;
+            margin: 0;
+        }
+
+        .share-modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .share-modal-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .share-instructions {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .share-output {
+            background: var(--bg-dark);
+            border: 1px solid #3d4a5c;
+            border-radius: 12px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            color: var(--text-primary);
+        }
+
+        .share-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .share-copy-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 20px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .share-copy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .share-close-btn {
+            background: var(--bg-dark);
+            border: 2px solid var(--text-muted);
+            border-radius: 10px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .share-close-btn:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                🎯 Brendan's Quest
+            </div>
+            <div class="bank-display" onclick="showView('bank')">
+                <span class="bank-icon">💰</span>
+                <div class="bank-info">
+                    <div class="bank-label">Brendan Bank</div>
+                    <div class="bank-amount" id="bankAmount">$0.00</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- View Tabs -->
+        <div class="view-tabs" id="mainTabs">
+            <button class="tab-btn active" onclick="showView('assignments')">📋 Assignments</button>
+            <button class="tab-btn" onclick="showView('bank')">💰 Brendan Bank</button>
+            <button class="tab-btn share-btn" onclick="openShareModal()">📤 Share with Mom</button>
+        </div>
+
+        <!-- Assignments View -->
+        <div id="assignmentsView" class="assignments-view active">
+            <div class="assignments-grid" id="assignmentsList">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Step View (shows when working on assignment) -->
+        <div id="stepView" class="step-view">
+            <button class="back-btn" onclick="backToAssignments()">
+                ← Back to Assignments
+            </button>
+            
+            <div class="big-picture" id="bigPicture">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="stepsContainer">
+                <!-- Steps populated by JS -->
+            </div>
+
+            <div class="final-output" id="finalOutput" style="display: none;">
+                <h3>📄 Your Completed Work</h3>
+                <div class="output-text" id="outputText"></div>
+                <button class="copy-btn" onclick="copyOutput()">
+                    📋 Copy to Clipboard
+                </button>
+            </div>
+        </div>
+
+        <!-- Bank View -->
+        <div id="bankView" class="bank-view">
+            <div class="bank-summary">
+                <div class="bank-total-label">Total Balance</div>
+                <div class="bank-total" id="bankTotal">$0.00</div>
+                <div class="bank-collect">Collect from Mom on Sunday! 💵</div>
+            </div>
+
+            <div class="transactions">
+                <h3>💳 Transaction History</h3>
+                <div id="transactionsList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="grades-section">
+                <h3>📊 Current Grades (for bonus tracking)</h3>
+                <div id="gradesList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="celebration" id="celebration">
+        <div class="celebration-emoji" id="celebrationEmoji">🎉</div>
+        <div class="celebration-text" id="celebrationText">Step Complete!</div>
+        <div class="celebration-subtext" id="celebrationSubtext">Great work! Keep going!</div>
+        <button class="celebration-btn" onclick="closeCelebration()">Continue →</button>
+    </div>
+
+    <!-- Help Chat -->
+    <button class="help-fab" id="helpFab" onclick="toggleHelpChat()">
+        <span class="help-fab-icon">🆘</span>
+        <span class="help-fab-text">Need Help?</span>
+    </button>
+
+    <div class="help-chat" id="helpChat">
+        <div class="help-chat-header">
+            <div class="help-chat-title">
+                <span>🤖</span> Homework Helper
+            </div>
+            <button class="help-chat-close" onclick="toggleHelpChat()">✕</button>
+        </div>
+        <div class="help-chat-messages" id="helpMessages">
+            <div class="help-message assistant">
+                <div class="help-message-content">
+                    Hey Brendan! 👋 I'm here to help if you get stuck. Ask me anything about your current assignment - I won't give you the answers, but I'll help you figure it out!
+                </div>
+            </div>
+        </div>
+        <div class="help-chat-input-area">
+            <textarea 
+                class="help-chat-input" 
+                id="helpInput" 
+                placeholder="Type your question..."
+                onkeydown="handleHelpKeydown(event)"
+            ></textarea>
+            <button class="help-send-btn" id="helpSendBtn" onclick="sendHelpMessage()">
+                Send
+            </button>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-overlay" id="shareOverlay" onclick="closeShareModal()"></div>
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-header">
+            <h2>📤 Share Progress with Mom</h2>
+            <button class="share-modal-close" onclick="closeShareModal()">✕</button>
+        </div>
+        <div class="share-modal-content">
+            <p class="share-instructions">Here's your progress report! Click the button to copy it, then paste it in a text or email to Mom.</p>
+            <div class="share-output" id="shareOutput">
+                <!-- Generated by JS -->
+            </div>
+            <div class="share-actions">
+                <button class="share-copy-btn" onclick="copyShareReport()">
+                    📋 Copy Report
+                </button>
+                <button class="share-close-btn" onclick="closeShareModal()">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA ====================
+        
+        // Brendan's current grades baseline
+        const grades = {
+            'INTG SCI': { current: 'F', baseline: 'F' },
+            'INT MTH 1': { current: 'D+', baseline: 'D+' },
+            'ENGLISH 9': { current: 'D+', baseline: 'D+' },
+            'INTGRTD PROJ': { current: 'D', baseline: 'D' },
+            'DIR STUDIES': { current: 'C', baseline: 'C' },
+            'ANIMATN': { current: 'C+', baseline: 'C+' },
+            'INT ELECTRNC': { current: 'B', baseline: 'B' },
+            'LIFE FIT': { current: 'B+', baseline: 'B+' }
+        };
+
+        // Thanksgiving Break Assignments
+        const assignments = [
+            {
+                id: 'ela-cer',
+                title: '🔄 FIX: CER Predicting the Genetic Future',
+                class: 'ELA',
+                classCode: 'E',
+                dueDate: 'Dec 2, 2025',
+                isOptional: false,
+                bonusMoney: 0,
+                priority: 'high',
+                isRevision: true,
+                standards: ['W1 (Claims)', 'W2 (Evidence)', 'W12 (Source Integration)', 'L1 (Grammar)', 'L2 (Conventions)'],
+                bigPicture: "Good news - you already turned this in! 🎉 But it needs some fixes to get a better score. The main problems are: (1) Your citations aren't in APA format, (2) You're missing a Works Cited list, and (3) Your conclusion needs to tie everything back together better. Let's fix these one at a time!",
+                whyMatters: "Fixing these issues could bump you up from a 2 (Developing) to a 3 (Proficient) on multiple standards. That's a big grade boost! Plus you already did the hard part.",
+                existingWork: {
+                    claim: "People with gene alterations will pass those alterations down to their children.",
+                    evidence1: '"Parents pass on traits or characteristics, such as eye colour and blood type, to their children through their genes. Some health conditions and diseases can be passed on genetically too."',
+                    source1: "betterhealth.vic.gov",
+                    reasoning1: "This explains how exactly genes get passed down, and even genetic disorders get passed down as genes. Because genetic alterations are considered disorders by your body, they will get passed down to your offspring.",
+                    evidence2: '"Since all cells in our body contain DNA, there are lots of places for mutations to occur; however, not all mutations matter for evolution. Somatic mutations occur in non-reproductive cells and so won\'t be passed on to offspring."',
+                    source2: "Evolution Berkeley",
+                    reasoning2: "This explains how only germline mutations will be passed onto offspring, meaning that if you were to genetically alter yourself to have more arms, your child would have a chance to be born with 4 arms.",
+                    conclusion: "The chances of kids being born with more unique traits will increase over the years due to their parents' alterations."
+                },
+                estimatedTime: '35-45 min',
+                steps: [
+                    {
+                        title: "Review Your Current Draft",
+                        time: "3 min",
+                        instructions: "Here's what you already wrote. Read through it to refresh your memory:\n\n<div style='background: #1e3a5f; padding: 15px; border-radius: 8px; margin: 10px 0; font-size: 0.9rem; line-height: 1.7;'><strong style='color: #4ecca3;'>Your Claim:</strong><br>\"People with gene alterations will pass those alterations down to their children.\"<br><br><strong style='color: #f6c90e;'>Evidence 1:</strong> Quote from betterhealth.vic.gov about traits being passed down<br><strong style='color: #00d9ff;'>Reasoning 1:</strong> Genetic alterations get passed to offspring<br><br><strong style='color: #f6c90e;'>Evidence 2:</strong> Quote from Evolution Berkeley about somatic vs germline mutations<br><strong style='color: #00d9ff;'>Reasoning 2:</strong> Only germline mutations pass on, so alterations could be inherited<br><br><strong style='color: #a855f7;'>Conclusion:</strong> \"The chances of kids being born with more unique traits will increase over the years due to their parents' alterations.\"</div>",
+                        lookingFor: "Just read it! Type 'read it' when done.",
+                        inputLabel: "Type 'read it' when you've reviewed your draft:"
+                    },
+                    {
+                        title: "Fix Citation #1 - Add APA Format",
+                        time: "5 min",
+                        instructions: "Your first quote needs a proper APA citation. Right now you have just \"-betterhealth.vic.gov\" which isn't correct format.\n\n<div style='background: #3d1a1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff6b6b;'><strong>❌ What you have:</strong><br>\"...passed on genetically too.\"-betterhealth.vic.gov</div>\n\n<div style='background: #1a3d1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #4ecca3;'><strong>✅ What it should be:</strong><br>\"...passed on genetically too\" (Better Health Channel, n.d., para. 3).</div>\n\n<strong>APA Rules:</strong>\n• Use parentheses ( ) not dashes\n• Capitalize the source name properly\n• Add n.d. when there's no date\n• Add para. # or p. # for location\n• Period goes AFTER the parentheses",
+                        lookingFor: "Write out the corrected citation with the quote.",
+                        inputLabel: "Write your first evidence WITH the fixed APA citation:"
+                    },
+                    {
+                        title: "Fix Citation #2 - Add APA Format",
+                        time: "5 min",
+                        instructions: "Same problem with your second quote! Let's fix it.\n\n<div style='background: #3d1a1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff6b6b;'><strong>❌ What you have:</strong><br>\"...passed on to offspring.\"-evolution berkeley</div>\n\n<div style='background: #1a3d1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #4ecca3;'><strong>✅ What it should be:</strong><br>\"...passed on to offspring\" (Understanding Evolution, n.d., para. 5).</div>\n\n<strong>Note:</strong> The site is actually called \"Understanding Evolution\" from UC Berkeley. Try to find the actual article title or use the website name properly capitalized.",
+                        lookingFor: "Write out the corrected citation with the quote.",
+                        inputLabel: "Write your second evidence WITH the fixed APA citation:"
+                    },
+                    {
+                        title: "Add Lead-Ins to Your Quotes",
+                        time: "6 min",
+                        instructions: "Right now your quotes are just dropped in. A \"lead-in\" introduces the quote smoothly.\n\n<div style='background: #3d1a1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff6b6b;'><strong>❌ Dropping a quote in:</strong><br>\"Parents pass on traits...\"</div>\n\n<div style='background: #1a3d1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #4ecca3;'><strong>✅ With a lead-in:</strong><br>According to the Better Health Channel, \"parents pass on traits...\"<br><br>OR<br><br>Research shows that \"parents pass on traits...\"</div>\n\nWrite lead-ins for BOTH your quotes.",
+                        lookingFor: "Two sentences with smooth lead-ins to your quotes.",
+                        inputLabel: "Write both quotes with lead-in phrases:"
+                    },
+                    {
+                        title: "Create Your Works Cited List",
+                        time: "8 min",
+                        instructions: "You need a Works Cited section at the end! Here's the APA format:\n\n<div style='background: #16213e; padding: 15px; border-radius: 8px; margin: 10px 0; font-family: monospace; font-size: 0.85rem;'><strong>Works Cited</strong><br><br>Author Last, First. (Year). Article title. <em>Website Name</em>. URL<br><br><strong>When there's no author, start with title:</strong><br>Article title. (Year). <em>Website Name</em>. URL<br><br><strong>When there's no date, use n.d.:</strong><br>Article title. (n.d.). <em>Website Name</em>. URL</div>\n\nYou need to look up the actual URLs for your two sources and format them correctly.",
+                        lookingFor: "Two properly formatted Works Cited entries.",
+                        inputLabel: "Write your Works Cited entries (one per source):"
+                    },
+                    {
+                        title: "Strengthen Your Conclusion",
+                        time: "6 min",
+                        instructions: "Your conclusion right now is just one sentence that doesn't tie back to your evidence. A strong conclusion should:\n\n1. ✅ Restate your claim (in different words)\n2. ✅ Briefly mention BOTH pieces of evidence\n3. ✅ End with a \"so what\" - why does this matter?\n\n<div style='background: #3d1a1a; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff6b6b;'><strong>Your current conclusion:</strong><br>\"The chances of kids being born with more unique traits will increase over the years due to their parents' alterations.\"</div>\n\nThis is OK but doesn't mention your evidence. Try something like: \"Because [evidence 1 point] and [evidence 2 point], we can expect that [restate claim]. This means that in the future...\"\n",
+                        lookingFor: "A 2-3 sentence conclusion that ties everything together.",
+                        inputLabel: "Write your improved conclusion:"
+                    },
+                    {
+                        title: "Fix Typos & Grammar Check",
+                        time: "4 min",
+                        instructions: "Found a typo in your original! You wrote \"getetic\" instead of \"genetic.\"\n\n<div style='background: #3d1a1a; padding: 12px; border-radius: 8px; margin: 10px 0;'>❌ \"Because <strong>getetic</strong> alterations are considered disorders...\"</div>\n\n<div style='background: #1a3d1a; padding: 12px; border-radius: 8px; margin: 10px 0;'>✅ \"Because <strong>genetic</strong> alterations are considered disorders...\"</div>\n\nAlso check:\n• \"Designer baby\" should probably be \"designer babies\" (plural)\n• Read each sentence out loud - if it sounds weird, fix it!",
+                        lookingFor: "List any other errors you found, or type 'all fixed!'",
+                        inputLabel: "Typos/errors found and fixed:"
+                    },
+                    {
+                        title: "Put It All Together - Final CER",
+                        time: "8 min",
+                        instructions: "Your original CER is below with <strong style='color: #ff6b6b;'>🔴 EDIT markers</strong> showing exactly what to fix. Just edit directly - delete the red markers as you fix each thing!\n\n<strong>Checklist as you edit:</strong>\n✏️ Add lead-in phrases before quotes\n✏️ Fix both citations to APA format\n✏️ Fix the \"getetic\" typo\n✏️ Strengthen the conclusion\n✏️ Add Works Cited at the bottom\n\n<strong>When done:</strong> Remove all the 🔴 markers, then copy into Google Docs!",
+                        lookingFor: "Your complete, polished CER with all markers removed.",
+                        inputLabel: "Edit your CER below (fix the 🔴 marked areas):",
+                        prefillText: `People with gene alterations that are based in designer baby will pass those alterations down to their children creating more unintentional designer babies.
+
+🔴[ADD LEAD-IN like "According to..." or "Research shows that..."] "Parents pass on traits or characteristics, such as eye colour and blood type, to their children through their genes. Some health conditions and diseases can be passed on genetically too" 🔴[FIX CITATION → (Better Health Channel, n.d., para. 3)].
+
+This explains how exactly genes get passed down, and even genetic disorders get passed down as genes. Because 🔴[FIX TYPO: getetic → genetic] alterations are considered disorders by your body, they will get passed down to your offspring.
+
+🔴[ADD LEAD-IN] "Since all cells in our body contain DNA, there are lots of places for mutations to occur; however, not all mutations matter for evolution. Somatic mutations occur in non-reproductive cells and so won't be passed on to offspring" 🔴[FIX CITATION → (Understanding Evolution, n.d., para. 5)].
+
+This explains how only germline mutations will be passed onto offspring, meaning that if you were to genetically alter yourself to have more arms, your child would have a chance to be born with 4 arms.
+
+🔴[STRENGTHEN THIS CONCLUSION - restate your claim, mention BOTH pieces of evidence, explain why this matters for the future]
+The chances of kids being born with more unique traits will increase over the years due to their parents' alterations.
+
+🔴[ADD WORKS CITED SECTION]
+Works Cited
+
+[Your first source in APA format]
+
+[Your second source in APA format]`
+                    }
+                ]
+            },
+            {
+                id: 'ela-plotline',
+                title: 'Plotline (Narrative Writing)',
+                class: 'ELA',
+                classCode: 'E',
+                dueDate: 'Dec 2, 2025',
+                isOptional: true,
+                bonusMoney: 1,
+                priority: 'medium',
+                standards: ['W6 (Establish Narrative)'],
+                bigPicture: "You're creating the beginning of a story - specifically the exposition (setup) and conflict (problem). Think of this like the first 5 minutes of a movie where you meet the main character and find out what problem they're facing.",
+                whyMatters: "Every story, video game, and movie uses this structure. Understanding it helps you both write better AND understand why your favorite stories work!",
+                estimatedTime: '30-40 min',
+                steps: [
+                    {
+                        title: "Create Your Main Character",
+                        time: "7 min",
+                        instructions: "Decide who your story is about. Give them a name, age, and one interesting detail about their life. This doesn't need to connect to CRISPR unless you want it to.",
+                        lookingFor: "A brief character description. Example: 'Maya, 16, lives in a future city where genetic modifications are common. She's one of the few people who was born 'natural.'",
+                        inputLabel: "Describe your main character:"
+                    },
+                    {
+                        title: "Set the Scene (Setting)",
+                        time: "7 min",
+                        instructions: "Where and when does your story take place? Describe the world in 2-3 sentences so the reader can picture it.",
+                        lookingFor: "A description of time and place that sets the mood. Could be realistic, futuristic, or fantastical.",
+                        inputLabel: "Describe your setting:"
+                    },
+                    {
+                        title: "Introduce the Conflict",
+                        time: "10 min",
+                        instructions: "What problem does your character face? This is the engine of your story. It should be something challenging that the reader wants to see resolved.",
+                        lookingFor: "A clear problem or challenge. Example: 'Maya discovers that her school is secretly tracking students' genetic data, and she needs to decide whether to expose them.'",
+                        inputLabel: "What is your character's main problem/conflict?"
+                    },
+                    {
+                        title: "Write Your Opening Paragraph",
+                        time: "12 min",
+                        instructions: "Now put it together! Write an opening paragraph that introduces your character, hints at the setting, and starts to reveal the conflict. Hook the reader!",
+                        lookingFor: "An engaging opening that makes someone want to read more.",
+                        inputLabel: "Write your opening paragraph:"
+                    }
+                ]
+            },
+            {
+                id: 'math-predictions',
+                title: 'Future Predictions: Is Your Generation\'s Future Doomed?',
+                class: 'MATH',
+                classCode: 'I',
+                dueDate: 'Dec 2, 2025',
+                isOptional: false,
+                bonusMoney: 0,
+                priority: 'high',
+                standards: ['Linear Functions', 'Exponential Functions'],
+                bigPicture: "You're using math to predict the future! By looking at patterns in data (like population growth, technology adoption, or climate change), you'll create equations that can forecast what happens next. This is the same math scientists and economists use for real predictions.",
+                whyMatters: "This is literally how scientists predict things like climate change, disease spread, and population growth. Understanding this helps you evaluate whether predictions you hear in the news are legit.",
+                estimatedTime: '40-50 min',
+                steps: [
+                    {
+                        title: "Understand Linear vs Exponential",
+                        time: "5 min",
+                        instructions: "Quick review: LINEAR growth adds the same amount each time (like saving $10/week). EXPONENTIAL growth multiplies (like doubling every year). Which type describes your data?",
+                        lookingFor: "Identify whether your assigned data shows linear or exponential patterns.",
+                        inputLabel: "Is your data linear or exponential? How can you tell?"
+                    },
+                    {
+                        title: "Identify the Key Numbers",
+                        time: "8 min",
+                        instructions: "From your data, find: (1) The starting value, and (2) The rate of change (how much it changes per time period).",
+                        lookingFor: "Two clear numbers: your starting point and your rate.",
+                        inputLabel: "Starting value and rate of change:"
+                    },
+                    {
+                        title: "Write Your Equation",
+                        time: "10 min",
+                        instructions: "For LINEAR: y = mx + b (where m is rate, b is start). For EXPONENTIAL: y = a(b)^x (where a is start, b is growth multiplier). Write your equation using your numbers.",
+                        lookingFor: "A complete equation with your actual numbers plugged in.",
+                        inputLabel: "Your prediction equation:"
+                    },
+                    {
+                        title: "Make a Future Prediction",
+                        time: "8 min",
+                        instructions: "Use your equation to predict a future value. Pick a year (like 2050 or 2100) and calculate what the data would be.",
+                        lookingFor: "Show your calculation work and the predicted result.",
+                        inputLabel: "Future prediction with work shown:"
+                    },
+                    {
+                        title: "Interpret Your Results",
+                        time: "10 min",
+                        instructions: "What does your prediction actually mean? Is it realistic? What could change it? Write 2-3 sentences explaining your prediction in plain English.",
+                        lookingFor: "A thoughtful interpretation that shows you understand what the numbers mean in real life.",
+                        inputLabel: "What does your prediction mean?"
+                    }
+                ]
+            },
+            {
+                id: 'science-crispr',
+                title: 'Plausible CRISPR Organism (Parts 1 & 2)',
+                class: 'SCIENCE',
+                classCode: 'F',
+                dueDate: 'Dec 2, 2025',
+                isOptional: false,
+                bonusMoney: 0,
+                priority: 'high',
+                standards: ['Structure & Function', 'Constructing Explanations', 'Genes/Proteins/Tissues'],
+                bigPicture: "You're designing a realistic genetically modified organism using CRISPR technology. This isn't sci-fi - you need to explain HOW the genetic change would work at the molecular level (genes → proteins → traits). Think of yourself as a real genetic engineer pitching an idea.",
+                whyMatters: "CRISPR is real technology being used RIGHT NOW to cure diseases and modify crops. Understanding how it works prepares you for a future where this tech is everywhere.",
+                estimatedTime: '50-60 min',
+                steps: [
+                    {
+                        title: "Choose Your Organism & Modification",
+                        time: "8 min",
+                        instructions: "Pick an organism (plant, animal, or microbe) and decide what trait you want to add or change. It needs to be PLAUSIBLE - something that could theoretically work based on real science.",
+                        lookingFor: "A specific organism + a specific trait change. Example: 'Modify rice to produce Vitamin A (Golden Rice already exists!)'",
+                        inputLabel: "Your organism and modification:"
+                    },
+                    {
+                        title: "Identify the Gene Involved",
+                        time: "10 min",
+                        instructions: "What gene would you need to edit? You might need to look this up. For your trait to work, what genetic instructions would need to change?",
+                        lookingFor: "Name a real gene or describe what the gene would need to code for.",
+                        inputLabel: "What gene(s) are involved?"
+                    },
+                    {
+                        title: "Explain the Gene → Protein Connection",
+                        time: "10 min",
+                        instructions: "Genes make proteins. What protein would your modified gene produce? How does that protein create the trait you want?",
+                        lookingFor: "A clear chain: Gene → Protein → Effect. Example: 'The gene codes for beta-carotene enzymes, which produce the orange pigment that becomes Vitamin A.'",
+                        inputLabel: "Explain the gene-protein-trait connection:"
+                    },
+                    {
+                        title: "How Would CRISPR Make This Change?",
+                        time: "10 min",
+                        instructions: "Briefly explain how CRISPR would be used. Would you delete a gene? Add one? Change part of it? CRISPR works like molecular scissors - what would you cut?",
+                        lookingFor: "A basic explanation of the CRISPR mechanism for your specific modification.",
+                        inputLabel: "How would CRISPR be used?"
+                    },
+                    {
+                        title: "Potential Benefits",
+                        time: "7 min",
+                        instructions: "Why would this modification be useful? What problem does it solve? Who would benefit?",
+                        lookingFor: "Clear, specific benefits - not just 'it would be cool.'",
+                        inputLabel: "Benefits of your modification:"
+                    },
+                    {
+                        title: "Potential Risks or Concerns",
+                        time: "7 min",
+                        instructions: "Every genetic modification has potential downsides. What could go wrong? What ethical concerns might people have?",
+                        lookingFor: "Thoughtful consideration of at least 2 risks or concerns.",
+                        inputLabel: "Risks and concerns:"
+                    }
+                ]
+            }
+        ];
+
+        // ==================== STATE ====================
+        
+        let state = {
+            currentView: 'assignments',
+            currentAssignment: null,
+            bankBalance: 0,
+            transactions: [],
+            assignmentProgress: {}, // { assignmentId: { stepsCompleted: [], answers: {} } }
+            grades: grades
+        };
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('brendanHomeworkHelper');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state = { ...state, ...parsed };
+            }
+            // Initialize progress for any new assignments
+            assignments.forEach(a => {
+                if (!state.assignmentProgress[a.id]) {
+                    state.assignmentProgress[a.id] = {
+                        stepsCompleted: [],
+                        answers: {}
+                    };
+                }
+            });
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('brendanHomeworkHelper', JSON.stringify(state));
+        }
+
+        // ==================== RENDERING ====================
+
+        function showView(viewName) {
+            state.currentView = viewName;
+            
+            // Update tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(viewName === 'assignments' ? 'Assignments' : 'Bank')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update views
+            document.getElementById('assignmentsView').classList.remove('active');
+            document.getElementById('stepView').classList.remove('active');
+            document.getElementById('bankView').classList.remove('active');
+            document.getElementById('mainTabs').style.display = 'flex';
+
+            if (viewName === 'assignments') {
+                document.getElementById('assignmentsView').classList.add('active');
+                renderAssignments();
+            } else if (viewName === 'bank') {
+                document.getElementById('bankView').classList.add('active');
+                renderBank();
+            } else if (viewName === 'step') {
+                document.getElementById('stepView').classList.add('active');
+                document.getElementById('mainTabs').style.display = 'none';
+                renderSteps();
+            }
+
+            updateBankDisplay();
+        }
+
+        function renderAssignments() {
+            const container = document.getElementById('assignmentsList');
+            container.innerHTML = assignments.map(a => {
+                const progress = state.assignmentProgress[a.id];
+                const totalSteps = a.steps.length;
+                const completedSteps = progress.stepsCompleted.length;
+                const percentComplete = Math.round((completedSteps / totalSteps) * 100);
+                const isComplete = completedSteps === totalSteps;
+
+                return `
+                    <div class="assignment-card ${a.priority === 'high' ? 'priority-high' : 'priority-medium'} ${isComplete ? 'completed' : ''}" 
+                         onclick="openAssignment('${a.id}')">
+                        <div class="assignment-header">
+                            <span class="assignment-class">${a.class}</span>
+                            ${a.isRevision ? '<span class="assignment-revision">🔄 REVISION</span>' : ''}
+                            ${a.isOptional ? `<span class="assignment-bonus">+$${a.bonusMoney} BONUS</span>` : ''}
+                        </div>
+                        <div class="assignment-title">${isComplete ? '✅ ' : ''}${a.title}</div>
+                        <div class="assignment-meta">
+                            <span>📅 Due: ${a.dueDate}</span>
+                            <span>⏱️ ~${a.estimatedTime}</span>
+                            <span>📊 ${completedSteps}/${totalSteps} steps</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentComplete}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAssignment(assignmentId) {
+            state.currentAssignment = assignments.find(a => a.id === assignmentId);
+            
+            // Reset help chat for fresh context
+            helpChatHistory = [];
+            const helpMessages = document.getElementById('helpMessages');
+            if (helpMessages) {
+                helpMessages.innerHTML = `
+                    <div class="help-message assistant">
+                        <div class="help-message-content">
+                            Hey Brendan! 👋 I see you're working on <strong>${state.currentAssignment.title}</strong>. Ask me anything if you get stuck - I'll help you figure it out without giving away the answers!
+                        </div>
+                    </div>
+                `;
+            }
+            
+            showView('step');
+        }
+
+        function backToAssignments() {
+            state.currentAssignment = null;
+            showView('assignments');
+        }
+
+        function renderSteps() {
+            const a = state.currentAssignment;
+            if (!a) return;
+
+            const progress = state.assignmentProgress[a.id];
+
+            // Render big picture
+            document.getElementById('bigPicture').innerHTML = `
+                <h2>🎯 The Big Picture: ${a.title}</h2>
+                <div class="big-picture-text">${a.bigPicture}</div>
+                <div class="why-matters">
+                    <div class="why-matters-label">💡 Why This Matters</div>
+                    ${a.whyMatters}
+                </div>
+                <div style="margin-top: 15px; color: var(--text-secondary);">
+                    <strong>Standards:</strong> ${a.standards.join(', ')}
+                </div>
+            `;
+
+            // Render steps
+            const stepsContainer = document.getElementById('stepsContainer');
+            stepsContainer.innerHTML = a.steps.map((step, index) => {
+                const isCompleted = progress.stepsCompleted.includes(index);
+                const isCurrentStep = !isCompleted && (index === 0 || progress.stepsCompleted.includes(index - 1));
+                // Use saved answer, or prefillText if available and no saved answer yet
+                const savedAnswer = progress.answers[index] || step.prefillText || '';
+
+                return `
+                    <div class="step-card ${isCompleted ? 'completed' : ''} ${isCurrentStep ? 'current' : ''}" id="step-${index}">
+                        <div class="step-header">
+                            <div class="step-number">${isCompleted ? '✓' : index + 1}</div>
+                            <div class="step-time">⏱️ ~${step.time}</div>
+                        </div>
+                        <div class="step-title">${step.title}</div>
+                        <div class="step-instructions">${step.instructions}</div>
+                        <div class="step-looking-for">
+                            <div class="looking-for-label">🔍 What you're looking for:</div>
+                            ${step.lookingFor}
+                        </div>
+                        <div style="margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9rem;">
+                            ${step.inputLabel}
+                        </div>
+                        <textarea class="answer-input ${a.id === 'ela-cer' && index === 7 ? 'large-input' : ''}" 
+                                  id="answer-${index}" 
+                                  placeholder="Type your answer here..."
+                                  onchange="saveAnswer(${index})"
+                                  oninput="debouncedSave(${index})"
+                                  ${isCompleted ? 'readonly' : ''}>${savedAnswer}</textarea>
+                        <div class="step-actions">
+                            ${!isCompleted ? `
+                                <button class="complete-btn" onclick="completeStep(${index})" ${!isCurrentStep ? 'disabled' : ''}>
+                                    ✓ Mark Complete
+                                </button>
+                            ` : `
+                                <span style="color: var(--accent-green); font-weight: 700;">✅ Completed!</span>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Check if all steps complete
+            const allComplete = progress.stepsCompleted.length === a.steps.length;
+            const finalOutput = document.getElementById('finalOutput');
+            
+            if (allComplete) {
+                finalOutput.style.display = 'block';
+                generateOutput();
+            } else {
+                finalOutput.style.display = 'none';
+            }
+        }
+
+        function saveAnswer(stepIndex) {
+            const answer = document.getElementById(`answer-${stepIndex}`).value;
+            state.assignmentProgress[state.currentAssignment.id].answers[stepIndex] = answer;
+            saveState();
+        }
+
+        // Debounced save - saves 1 second after user stops typing
+        let saveTimeout = null;
+        function debouncedSave(stepIndex) {
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => saveAnswer(stepIndex), 1000);
+        }
+
+        function completeStep(stepIndex) {
+            const a = state.currentAssignment;
+            const progress = state.assignmentProgress[a.id];
+            
+            // Save the answer
+            saveAnswer(stepIndex);
+
+            // Mark step complete
+            if (!progress.stepsCompleted.includes(stepIndex)) {
+                progress.stepsCompleted.push(stepIndex);
+            }
+            saveState();
+
+            // Check if assignment is now complete
+            const isAssignmentComplete = progress.stepsCompleted.length === a.steps.length;
+
+            // Show celebration
+            showCelebration(stepIndex, a.steps.length, isAssignmentComplete, a);
+        }
+
+        function showCelebration(stepIndex, totalSteps, isAssignmentComplete, assignment) {
+            const overlay = document.getElementById('overlay');
+            const celebration = document.getElementById('celebration');
+            const emoji = document.getElementById('celebrationEmoji');
+            const text = document.getElementById('celebrationText');
+            const subtext = document.getElementById('celebrationSubtext');
+
+            if (isAssignmentComplete) {
+                emoji.textContent = '🎉🏆🎉';
+                text.textContent = 'ASSIGNMENT COMPLETE!';
+                subtext.textContent = assignment.isOptional 
+                    ? `Amazing work! You earned $${assignment.bonusMoney} bonus!`
+                    : 'Fantastic job! You crushed it!';
+                
+                // Add bonus money for optional assignments
+                if (assignment.isOptional && !state.transactions.find(t => t.id === assignment.id)) {
+                    state.bankBalance += assignment.bonusMoney;
+                    state.transactions.push({
+                        id: assignment.id,
+                        desc: `Bonus: ${assignment.title}`,
+                        amount: assignment.bonusMoney,
+                        date: new Date().toLocaleDateString()
+                    });
+                    saveState();
+                    updateBankDisplay();
+                }
+            } else {
+                const messages = [
+                    { emoji: '🔥', text: 'Nice work!', subtext: `${totalSteps - stepIndex - 1} steps to go - you got this!` },
+                    { emoji: '💪', text: 'Crushed it!', subtext: `Step ${stepIndex + 1} done! Keep that momentum!` },
+                    { emoji: '⭐', text: 'Awesome!', subtext: `You're ${Math.round(((stepIndex + 1) / totalSteps) * 100)}% done!` },
+                    { emoji: '🚀', text: 'On fire!', subtext: 'One step closer to being done!' }
+                ];
+                const msg = messages[stepIndex % messages.length];
+                emoji.textContent = msg.emoji;
+                text.textContent = msg.text;
+                subtext.textContent = msg.subtext;
+            }
+
+            overlay.classList.add('show');
+            celebration.classList.add('show');
+        }
+
+        function closeCelebration() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('celebration').classList.remove('show');
+            renderSteps();
+        }
+
+        function generateOutput() {
+            const a = state.currentAssignment;
+            const progress = state.assignmentProgress[a.id];
+            
+            let output = '';
+            
+            // Special formatting for CER revision
+            if (a.id === 'ela-cer') {
+                output = `HtCaM - CER - Predicting the Future
+
+Your first and last name: Brendan Kennedy
+
+Your CER, including claim/thesis, evidence, and explanation:
+
+${progress.answers[7] || '[Complete all steps to generate your final CER]'}
+`;
+            } else {
+                output = `${a.title}\n`;
+                output += `${'='.repeat(a.title.length)}\n\n`;
+                output += `Class: ${a.class}\n`;
+                output += `Due: ${a.dueDate}\n`;
+                output += `Standards: ${a.standards.join(', ')}\n\n`;
+                output += `---\n\n`;
+
+                a.steps.forEach((step, index) => {
+                    output += `${step.title}\n`;
+                    output += `${'-'.repeat(step.title.length)}\n`;
+                    output += `${progress.answers[index] || '[No answer provided]'}\n\n`;
+                });
+            }
+
+            document.getElementById('outputText').textContent = output;
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        function renderBank() {
+            document.getElementById('bankTotal').textContent = `$${state.bankBalance.toFixed(2)}`;
+            
+            // Transactions
+            const transList = document.getElementById('transactionsList');
+            if (state.transactions.length === 0) {
+                transList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-emoji">💸</div>
+                        <p>No earnings yet! Complete optional assignments or improve grades to earn money.</p>
+                    </div>
+                `;
+            } else {
+                transList.innerHTML = state.transactions.map(t => `
+                    <div class="transaction-item">
+                        <span class="transaction-desc">${t.desc} <small style="color: var(--text-muted)">(${t.date})</small></span>
+                        <span class="transaction-amount">+$${t.amount.toFixed(2)}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Grades
+            const gradesList = document.getElementById('gradesList');
+            gradesList.innerHTML = Object.entries(state.grades).map(([className, data]) => {
+                const gradeClass = data.current.charAt(0).toLowerCase();
+                return `
+                    <div class="grade-row">
+                        <span class="grade-class">${className}</span>
+                        <span class="grade-badge grade-${gradeClass}">${data.current}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateBankDisplay() {
+            document.getElementById('bankAmount').textContent = `$${state.bankBalance.toFixed(2)}`;
+        }
+
+        // ==================== HELP CHAT ====================
+
+        let helpChatHistory = [];
+
+        function toggleHelpChat() {
+            const chat = document.getElementById('helpChat');
+            chat.classList.toggle('open');
+            if (chat.classList.contains('open')) {
+                document.getElementById('helpInput').focus();
+            }
+        }
+
+        function handleHelpKeydown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendHelpMessage();
+            }
+        }
+
+        function getCurrentContext() {
+            // Build context about what Brendan is currently working on
+            let context = "";
+            
+            if (state.currentAssignment) {
+                const a = state.currentAssignment;
+                const progress = state.assignmentProgress[a.id];
+                const currentStepIndex = progress.stepsCompleted.length;
+                const currentStep = a.steps[currentStepIndex];
+                
+                context = `
+CURRENT ASSIGNMENT: ${a.title}
+CLASS: ${a.class}
+DUE DATE: ${a.dueDate}
+STANDARDS: ${a.standards.join(', ')}
+
+WHAT THIS ASSIGNMENT IS ABOUT:
+${a.bigPicture}
+
+WHY IT MATTERS:
+${a.whyMatters}
+
+PROGRESS: Step ${currentStepIndex + 1} of ${a.steps.length}
+`;
+                
+                if (currentStep) {
+                    context += `
+CURRENT STEP: ${currentStep.title}
+INSTRUCTIONS: ${currentStep.instructions.replace(/<[^>]*>/g, '')}
+WHAT TO LOOK FOR: ${currentStep.lookingFor}
+`;
+                    // Include what they've written so far for this step
+                    const currentAnswer = document.getElementById(`answer-${currentStepIndex}`)?.value;
+                    if (currentAnswer && currentAnswer.trim()) {
+                        context += `
+WHAT BRENDAN HAS WRITTEN SO FAR:
+${currentAnswer}
+`;
+                    }
+                }
+                
+                // For CER revision, include his original work
+                if (a.existingWork) {
+                    context += `
+BRENDAN'S ORIGINAL SUBMITTED WORK:
+Claim: ${a.existingWork.claim}
+Evidence 1 source: ${a.existingWork.source1}
+Evidence 2 source: ${a.existingWork.source2}
+`;
+                }
+            } else {
+                context = "Brendan is on the assignments list, not currently working on a specific assignment.";
+            }
+            
+            return context;
+        }
+
+        function buildSystemPrompt() {
+            const context = getCurrentContext();
+            
+            return `You are a homework helper for Brendan, a 15-year-old 9th grader with ADHD. Your job is to help him understand his assignments and guide him to find answers himself.
+
+CRITICAL RULES:
+1. NEVER give him the direct answer - guide him to figure it out
+2. Keep responses SHORT (2-4 sentences max unless he needs more explanation)
+3. Use simple, casual language - talk like a friendly tutor, not a textbook
+4. Use analogies to things a 15-year-old would know (video games, YouTube, sports)
+5. Be encouraging! Celebrate when he's on the right track
+6. If he's stuck, break the problem into smaller pieces
+7. Ask guiding questions instead of lecturing
+
+BRENDAN'S CURRENT CONTEXT:
+${context}
+
+When helping:
+- If he asks "what should I write?" → Ask him what HE thinks, then guide from there
+- If he's confused about a concept → Explain it simply with an example
+- If he's on the right track → Tell him so and encourage him to keep going
+- If he's way off → Gently redirect without making him feel bad
+- If he asks about format (like APA citations) → Give him the specific format rules
+
+Remember: Short, helpful, encouraging. You're his homework buddy, not his teacher.`;
+        }
+
+        async function sendHelpMessage() {
+            const input = document.getElementById('helpInput');
+            const sendBtn = document.getElementById('helpSendBtn');
+            const messagesContainer = document.getElementById('helpMessages');
+            
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Disable input while processing
+            input.disabled = true;
+            sendBtn.disabled = true;
+            
+            // Add user message to chat
+            messagesContainer.innerHTML += `
+                <div class="help-message user">
+                    <div class="help-message-content">${escapeHtml(message)}</div>
+                </div>
+            `;
+            
+            // Clear input
+            input.value = '';
+            
+            // Add to history
+            helpChatHistory.push({ role: 'user', content: message });
+            
+            // Show typing indicator
+            const typingId = 'typing-' + Date.now();
+            messagesContainer.innerHTML += `
+                <div class="help-message assistant" id="${typingId}">
+                    <div class="help-message-content">
+                        <div class="help-typing">
+                            <div class="help-typing-dot"></div>
+                            <div class="help-typing-dot"></div>
+                            <div class="help-typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            try {
+                // Build messages array with system prompt and history
+                const messages = [
+                    { role: 'user', content: buildSystemPrompt() + '\n\n---\n\nBrendan says: ' + helpChatHistory[0].content }
+                ];
+                
+                // Add conversation history (alternating assistant/user)
+                for (let i = 0; i < helpChatHistory.length; i++) {
+                    if (i === 0) continue; // Skip first, already included
+                    messages.push(helpChatHistory[i]);
+                }
+                
+                // Actually just rebuild properly
+                const apiMessages = [];
+                
+                // First message includes system context
+                if (helpChatHistory.length === 1) {
+                    apiMessages.push({
+                        role: 'user',
+                        content: buildSystemPrompt() + '\n\n---\n\nBrendan says: ' + message
+                    });
+                } else {
+                    // Include system context in first message, then history
+                    apiMessages.push({
+                        role: 'user', 
+                        content: buildSystemPrompt() + '\n\n---\n\nBrendan says: ' + helpChatHistory[0].content
+                    });
+                    
+                    for (let i = 1; i < helpChatHistory.length; i++) {
+                        apiMessages.push(helpChatHistory[i]);
+                    }
+                }
+                
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 500,
+                        messages: apiMessages
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                
+                const data = await response.json();
+                const assistantMessage = data.content[0].text;
+                
+                // Add to history
+                helpChatHistory.push({ role: 'assistant', content: assistantMessage });
+                
+                // Remove typing indicator and add real response
+                document.getElementById(typingId).remove();
+                
+                messagesContainer.innerHTML += `
+                    <div class="help-message assistant">
+                        <div class="help-message-content">${formatHelpResponse(assistantMessage)}</div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Help chat error:', error);
+                
+                // Remove typing indicator
+                document.getElementById(typingId)?.remove();
+                
+                messagesContainer.innerHTML += `
+                    <div class="help-message assistant">
+                        <div class="help-message-content">
+                            Oops! I'm having trouble connecting right now. Try asking your question again, or check if you're connected to the internet. 🔌
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Re-enable input
+            input.disabled = false;
+            sendBtn.disabled = false;
+            input.focus();
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatHelpResponse(text) {
+            // Convert basic markdown-like formatting
+            return escapeHtml(text)
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // ==================== SHARE MODAL ====================
+
+        function openShareModal() {
+            generateShareReport();
+            document.getElementById('shareOverlay').classList.add('open');
+            document.getElementById('shareModal').classList.add('open');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareOverlay').classList.remove('open');
+            document.getElementById('shareModal').classList.remove('open');
+        }
+
+        function generateShareReport() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            let report = `📊 BRENDAN'S HOMEWORK PROGRESS\n`;
+            report += `📅 ${dateStr}\n`;
+            report += `${'═'.repeat(40)}\n\n`;
+
+            // Bank Balance
+            report += `💰 BRENDAN BANK: $${state.bankBalance.toFixed(2)}\n\n`;
+
+            // Assignment Progress
+            report += `📋 ASSIGNMENTS (Due Dec 2)\n`;
+            report += `${'─'.repeat(40)}\n\n`;
+
+            assignments.forEach(a => {
+                const progress = state.assignmentProgress[a.id];
+                const totalSteps = a.steps.length;
+                const completedSteps = progress.stepsCompleted.length;
+                const percentComplete = Math.round((completedSteps / totalSteps) * 100);
+                const isComplete = completedSteps === totalSteps;
+
+                // Status emoji
+                let statusEmoji = '⬜';
+                if (isComplete) {
+                    statusEmoji = '✅';
+                } else if (completedSteps > 0) {
+                    statusEmoji = '🟡';
+                }
+
+                report += `${statusEmoji} ${a.title}\n`;
+                report += `   Class: ${a.class} | Progress: ${completedSteps}/${totalSteps} steps (${percentComplete}%)\n`;
+                
+                if (a.isOptional) {
+                    report += `   💵 Bonus: $${a.bonusMoney} when complete\n`;
+                }
+
+                // Show current step if in progress
+                if (!isComplete && completedSteps > 0) {
+                    const currentStep = a.steps[completedSteps];
+                    if (currentStep) {
+                        report += `   📍 Currently on: ${currentStep.title}\n`;
+                    }
+                }
+
+                // If complete, show final answer preview for CER
+                if (isComplete && a.id === 'ela-cer') {
+                    const finalAnswer = progress.answers[7];
+                    if (finalAnswer) {
+                        report += `   📝 Final CER written (${finalAnswer.length} characters)\n`;
+                    }
+                }
+
+                report += `\n`;
+            });
+
+            // Summary
+            const totalAssignments = assignments.length;
+            const completedAssignments = assignments.filter(a => 
+                state.assignmentProgress[a.id].stepsCompleted.length === a.steps.length
+            ).length;
+            const inProgressAssignments = assignments.filter(a => {
+                const progress = state.assignmentProgress[a.id];
+                return progress.stepsCompleted.length > 0 && progress.stepsCompleted.length < a.steps.length;
+            }).length;
+
+            report += `${'─'.repeat(40)}\n`;
+            report += `📈 SUMMARY\n`;
+            report += `   ✅ Complete: ${completedAssignments}/${totalAssignments}\n`;
+            report += `   🟡 In Progress: ${inProgressAssignments}\n`;
+            report += `   ⬜ Not Started: ${totalAssignments - completedAssignments - inProgressAssignments}\n`;
+
+            document.getElementById('shareOutput').textContent = report;
+        }
+
+        function copyShareReport() {
+            const report = document.getElementById('shareOutput').textContent;
+            navigator.clipboard.writeText(report).then(() => {
+                const btn = document.querySelector('.share-copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                btn.style.background = 'var(--accent-green)';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // ==================== INIT ====================
+        
+        loadState();
+        showView('assignments');
+
+        // Auto-save on page unload
+        window.addEventListener('beforeunload', saveState);
+    </script>
+</body>
+</html>
